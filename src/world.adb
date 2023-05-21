@@ -152,10 +152,10 @@ package body World is
 			--scan.y := Length(i  /  Area(Size));
 			
 			--just flip flop for now
-			if get_cell(scan) = Alive then
-				set_cell(scan, Dead);
+			if get_cell(i) = Alive then
+				set_cell(i, Dead);
 			else
-				set_cell(scan, Alive);
+				set_cell(i, Alive);
 			end if;
 		end loop;
 	end simulate;
