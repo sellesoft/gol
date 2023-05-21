@@ -1,0 +1,16 @@
+name = "gol"
+description = "Shiny new project"
+version = "0.1.0-dev"
+
+authors = ["Your Name"]
+maintainers = ["Your Name <example@example.com>"]
+maintainers-logins = ["github-username"]
+
+executables = ["gol"]
+
+[build-switches]
+"*".style_checks = "No"
+"*".ada_version = "Ada2022"
+
+
+
