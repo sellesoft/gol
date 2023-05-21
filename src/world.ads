@@ -1,9 +1,12 @@
 package World is
 	-----------------------------------------------------------------------------------------------
 	---- Size
-	Size: constant Integer := 100; -- area of world = world_size**2
+	Size: constant Integer := 10; -- area of world = world_size**2
 	type Length is mod Size;
 	type Area is mod Size**2;
+	
+	function to_x(a: Area) return Length with Inline;
+	function to_y(a: Area) return Length with Inline;
 
 	-----------------------------------------------------------------------------------------------
 	---- Coord
@@ -13,31 +16,22 @@ package World is
 	end record;
 	type Direction is (Left,TopLeft,Top,TopRight,Right,BottomRight,Bottom,BottomLeft);
 
-	function "+"(a, b: Coord) return Coord with Inline;
-	function "-"(a, b: Coord) return Coord with Inline;
-	function above_coord(a: Coord) return Coord with Inline;
-	function below_coord(a: Coord) return Coord with Inline;
-	function left_coord (a: Coord) return Coord with Inline;
-	function right_coord(a: Coord) return Coord with Inline;
-	function relative_coord(a: Coord; d: Direction) return Coord with Inline;
-	procedure print(a: Coord) with Inline;
-	procedure println(a: Coord) with Inline;
+	function "+"(left, right: Coord) return Coord with Inline;
+	function "-"(left, right: Coord) return Coord with Inline;
+	function get_coord(r: Coord; d: Direction) return Coord;
+	function to_coord(a: Area) return Coord with Inline;
+	procedure print(r: Coord) with Inline;
+	procedure println(r: Coord) with Inline;
 
 	-----------------------------------------------------------------------------------------------
 	---- Cell
 	type Cell is (Dead,Alive);
 
-	function  get_cell(x, y: Length) return Cell with Inline;
 	function  get_cell(r: Coord) return Cell with Inline;
 	function  get_cell(a: Area) return Cell with Inline;
-	procedure set_cell(x, y: Length; c: Cell) with Inline;
+	function  get_cell(r: Coord; d: Direction) return Cell;
 	procedure set_cell(r: Coord; c: Cell) with Inline;
 	procedure set_cell(a: Area; c: Cell) with Inline;
-
-	function above_cell(a: Coord) return Cell with Inline;
-	function below_cell(a: Coord) return Cell with Inline;
-	function left_cell (a: Coord) return Cell with Inline;
-	function right_cell(a: Coord) return Cell with Inline;
 
 	-----------------------------------------------------------------------------------------------
 	---- World
@@ -49,5 +43,6 @@ package World is
 	procedure simulate;
 
 	world: WorldTable;
+	temp_world: WorldTable; --work in a different world to avoid state changes mid-simulation
 	world_buffer: String(1..((Size**2) + 4*Size + 4 + Size + 1)); --world + borders + corners + newlines
 end World;
