@@ -7,6 +7,7 @@ procedure gol is
 begin
 	println("Starting Life...");
 	
+	init_world;
 	loop
 		println("Tick: " & Integer'Image(tick));
 		print_world;

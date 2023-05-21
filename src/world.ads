@@ -20,6 +20,7 @@ package World is
 	function left_coord (a: Coord) return Coord with Inline;
 	function right_coord(a: Coord) return Coord with Inline;
 	function relative_coord(a: Coord; d: Direction) return Coord with Inline;
+	procedure print(a: Coord) with Inline;
 	procedure println(a: Coord) with Inline;
 
 	-----------------------------------------------------------------------------------------------
@@ -37,15 +38,16 @@ package World is
 	function below_cell(a: Coord) return Cell with Inline;
 	function left_cell (a: Coord) return Cell with Inline;
 	function right_cell(a: Coord) return Cell with Inline;
-	procedure print(a: Cell) with Inline;
 
 	-----------------------------------------------------------------------------------------------
 	---- World
 	type WorldRow is array(Length) of Cell;
 	type WorldTable is array(Length) of WorldRow;
 
+	procedure init_world;
 	procedure print_world;
 	procedure simulate;
 
 	world: WorldTable;
+	world_buffer: String(1..((Size**2) + 4*Size + 4 + Size + 1)); --world + borders + corners + newlines
 end World;

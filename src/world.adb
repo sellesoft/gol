@@ -64,6 +64,10 @@ package body World is
 		end case;
 	end relative_coord;
 
+	procedure print(a: Coord) is begin
+		Common.print("(" & Integer'Image(Integer(a.x)) & "," & Integer'Image(Integer(a.y)) & ")");
+	end print;
+
 	procedure println(a: Coord) is begin
 		Common.println("(" & Integer'Image(Integer(a.x)) & "," & Integer'Image(Integer(a.y)) & ")");
 	end println;
@@ -85,14 +89,17 @@ package body World is
 
 	procedure set_cell(x, y: Length; c: Cell) is begin
 		world(x)(y) := c;
+		world_buffer(Size+5 + Integer(y)*3 + Integer(y)*Size + Integer(x)) := (if (c = Alive) then '@' else ' ');
 	end set_cell;
 
 	procedure set_cell(r: Coord; c: Cell) is begin
 		world(r.x)(r.y) := c;
+		world_buffer(Size+5 + Integer(r.y)*3 + Integer(r.y)*Size + Integer(r.x)) := (if (c = Alive) then '@' else ' ');
 	end set_cell;
 
 	procedure set_cell(a: Area; c: Cell) is begin
 		world(Length(Integer(a) / Size))(Length(Integer(a) mod Size)) := c;
+		world_buffer(Size+5 + (Integer(a) / Size)*3 + Integer(a)) := (if (c = Alive) then '@' else ' ');
 	end set_cell;
 
 	function above_cell(a: Coord) return Cell is begin
@@ -111,37 +118,44 @@ package body World is
 		return get_cell(right_coord(a));
 	end right_cell;
 
-	procedure print(a: Cell) is begin
-		if(a = Alive) then
-			Common.print("@");
-		else
-			Common.print(" ");
-		end if;
-	end print;
-
 
 	-----------------------------------------------------------------------------------------------
 	---- World
-	procedure print_world is begin
-		for i in Length loop print("="); end loop; println("==");
+	procedure init_world is
+		cursor: Integer := 1;
+		LF: constant Character := Character'Val(10);
+		
+		procedure put_buffer(c: Character) is begin
+			world_buffer(cursor) := c;
+			cursor := cursor + 1;
+		end put_buffer;
+	begin
+		--init the world buffer
+		for i in 1..(Size+2) loop put_buffer('='); end loop; put_buffer(LF);
 		for i in Area loop
-			if(Integer(i) mod Size = 0) then print("|"); end if;
-			print(get_cell(i));
-			if(Integer(i) mod Size = Size-1) then println("|"); end if;
+			if(Integer(i) mod Size = 0) then put_buffer('|'); end if;
+			put_buffer(if (get_cell(i) = Alive) then '@' else ' ');
+			if(Integer(i) mod Size = Size-1) then put_buffer('|'); put_buffer(LF); end if;
 		end loop;
-		for i in Length loop print("="); end loop; println("==");
+		for i in 1..(Size+2) loop put_buffer('='); end loop;
+	end init_world;
+	
+	procedure print_world is begin
+		println(world_buffer);
 	end print_world;
 
 	procedure simulate is
-		scan: Coord;
+		--scan: Coord;
 	begin
 		for i in Area loop
-			scan.x := Length(i  /  Area(Size));
-			scan.y := Length(i mod Area(Size));
-			if get_cell(i) = Alive then
-				set_cell(i, Dead);
+			--scan.x := Length(i mod Area(Size));
+			--scan.y := Length(i  /  Area(Size));
+			
+			--just flip flop for now
+			if get_cell(scan) = Alive then
+				set_cell(scan, Dead);
 			else
-				set_cell(i, Alive);
+				set_cell(scan, Alive);
 			end if;
 		end loop;
 	end simulate;
