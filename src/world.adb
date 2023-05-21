@@ -103,7 +103,7 @@ package body World is
 	end set_cell;
 	
 	procedure set_cell(a: Area; c: Cell) is begin
-		temp_world(to_y(a))(to_x(a)) := c; --edit the temp world
+		temp_world(to_x(a))(to_y(a)) := c; --edit the temp world
 		world_buffer(Size+5 + (Integer(a) / Size)*3 + Integer(a)) := (if (c = Alive) then '@' else ' ');
 	end set_cell;
 
@@ -161,14 +161,8 @@ package body World is
 			--any dead cell with 3 alive neighbours becomes alive
 			--all other cells die or stay dead
 			if (neighbours = 3) or (state = Alive and neighbours = 2) then
-				print(to_coord(a));
-				println("; " & Cell'Image(state) & "->" & Cell'Image(Alive) & "; n=" & Integer'Image(neighbours));
-				
 				set_cell(a, Alive);
 			else
-				print(to_coord(a));
-				println("; " & Cell'Image(state) & "->" & Cell'Image(Dead) & "; n=" & Integer'Image(neighbours));
-				
 				set_cell(a, Dead);
 			end if;
 		end loop;
