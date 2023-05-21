@@ -51,20 +51,17 @@ package body World is
 		return c;
 	end right_coord;
 
-	function relative_coord(a: Coord; d: Direction) return Coord is
-		c: Coord;
-	begin
+	function relative_coord(a: Coord; d: Direction) return Coord is begin
 		case d is
-			when Left        => c.x := a.x - 1; c.y := a.y + 0;
-			when TopLeft     => c.x := a.x - 1; c.y := a.y - 1;
-			when Top         => c.x := a.x + 0; c.y := a.y - 1;
-			when TopRight    => c.x := a.x + 1; c.y := a.y - 1;
-			when Right       => c.x := a.x + 1; c.y := a.y + 0;
-			when BottomRight => c.x := a.x + 1; c.y := a.y + 1;
-			when Bottom      => c.x := a.x + 0; c.y := a.y + 1;
-			when BottomLeft  => c.x := a.x - 1; c.y := a.y + 1;
+			when Left        => return a + (-1, 0);
+			when TopLeft     => return a + (-1,-1);
+			when Top         => return a + ( 0,-1);
+			when TopRight    => return a + ( 1,-1);
+			when Right       => return a + ( 1, 0);
+			when BottomRight => return a + ( 1, 1);
+			when Bottom      => return a + ( 0, 1);
+			when BottomLeft  => return a + (-1, 1);
 		end case;
-		return c;
 	end relative_coord;
 
 	procedure println(a: Coord) is begin
@@ -135,14 +132,17 @@ package body World is
 		for i in Length loop print("="); end loop; println("==");
 	end print_world;
 
-	procedure sim is
+	procedure simulate is
 		scan: Coord;
 	begin
 		for i in Area loop
 			scan.x := Length(i  /  Area(Size));
 			scan.y := Length(i mod Area(Size));
-			--  if get_coord(right)
-			--  set_cell(i, Alive);
+			if get_cell(i) = Alive then
+				set_cell(i, Dead);
+			else
+				set_cell(i, Alive);
+			end if;
 		end loop;
-	end sim;
+	end simulate;
 end World;

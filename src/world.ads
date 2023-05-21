@@ -45,7 +45,7 @@ package World is
 	type WorldTable is array(Length) of WorldRow;
 
 	procedure print_world;
-	procedure sim;
+	procedure simulate;
 
 	world: WorldTable;
 end World;

@@ -1,13 +1,21 @@
---with Ada.Command_Line;
+with Ada.Text_IO;
 with World; use World;
 with Common; use Common;
 
 procedure gol is
-	--package cli renames Ada.Command_Line;
+	tick: Integer := 0;
 begin
 	println("Starting Life...");
-	print_world;
-	sim;
-	print_world;
 	
+	loop
+		println("Tick: " & Integer'Image(tick));
+		print_world;
+		
+		declare
+			input: String := Ada.Text_IO.Get_Line; --wait for newline input
+		begin
+			simulate;
+			tick := tick + 1;
+		end;
+	end loop;
 end gol;
