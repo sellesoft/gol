@@ -52,17 +52,19 @@ package body World is
 	end right_coord;
 
 	function relative_coord(a: Coord; d: Direction) return Coord is
+		c: Coord;
 	begin
 		case d is
-			when Left        => return a + Coord(-1, 0);
-			when TopLeft     => return a + Coord(-1,-1);
-			when Top         => return a + Coord( 0,-1);
-			when TopRight    => return a + Coord( 1,-1);
-			when Right       => return a + Coord( 1, 0);
-			when BottomRight => return a + Coord( 1, 1);
-			when Bottom      => return a + Coord( 0, 1);
-			when BottomLeft  => return a + Coord(-1, 1);
+			when Left        => c.x := a.x - 1; c.y := a.y + 0;
+			when TopLeft     => c.x := a.x - 1; c.y := a.y - 1;
+			when Top         => c.x := a.x + 0; c.y := a.y - 1;
+			when TopRight    => c.x := a.x + 1; c.y := a.y - 1;
+			when Right       => c.x := a.x + 1; c.y := a.y + 0;
+			when BottomRight => c.x := a.x + 1; c.y := a.y + 1;
+			when Bottom      => c.x := a.x + 0; c.y := a.y + 1;
+			when BottomLeft  => c.x := a.x - 1; c.y := a.y + 1;
 		end case;
+		return c;
 	end relative_coord;
 
 	procedure println(a: Coord) is begin

@@ -8,7 +8,8 @@ package World is
 	-----------------------------------------------------------------------------------------------
 	---- Coord
 	type Coord is record
-		x, y: Length;
+		x: Length := 0;
+		y: Length := 0;
 	end record;
 	type Direction is (Left,TopLeft,Top,TopRight,Right,BottomRight,Bottom,BottomLeft);
 
