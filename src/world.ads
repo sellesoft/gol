@@ -1,7 +1,7 @@
 package World is
 	-----------------------------------------------------------------------------------------------
 	---- Size
-	Size: constant Integer := 10; -- area of world = world_size**2
+	Size: constant Integer := 50; -- area of world = world_size**2
 	type Length is mod Size;
 	type Area is mod Size**2;
 	

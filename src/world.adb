@@ -120,20 +120,9 @@ package body World is
 		end put_buffer;
 	begin
 		--seed the current world
-		--for a in Area loop
-		--	world(to_y(a))(to_x(a)) := (if random(40) then Alive else Dead);
-		--end loop;
-		
-		--test world: block
-		--world(4)(4) := Alive;
-		--world(4)(5) := Alive;
-		--world(5)(4) := Alive;
-		--world(5)(5) := Alive;
-		
-		--test world: blinker
-		world(4)(5) := Alive;
-		world(5)(5) := Alive;
-		world(6)(5) := Alive;
+		for a in Area loop
+			world(to_y(a))(to_x(a)) := (if random(40) then Alive else Dead);
+		end loop;
 		
 		--init the world buffer
 		for i in 1..(Size+2) loop put_buffer('='); end loop; put_buffer(LF);
