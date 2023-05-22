@@ -99,12 +99,12 @@ package body World is
 
 	procedure set_cell(r: Coord; c: Cell) is begin
 		temp_world(r.x)(r.y) := c; --edit the temp world
-		world_buffer(Size+5 + Integer(r.y)*3 + Integer(r.y)*Size + Integer(r.x)) := (if (c = Alive) then '@' else ' ');
+		world_buffer(Size+5 + Integer(r.y)*3 + Integer(r.y)*Size + Integer(r.x)) := (if (c = Alive) then '+' else ' ');
 	end set_cell;
 	
 	procedure set_cell(a: Area; c: Cell) is begin
 		temp_world(to_x(a))(to_y(a)) := c; --edit the temp world
-		world_buffer(Size+5 + (Integer(a) / Size)*3 + Integer(a)) := (if (c = Alive) then '@' else ' ');
+		world_buffer(Size+5 + (Integer(a) / Size)*3 + Integer(a)) := (if (c = Alive) then '+' else ' ');
 	end set_cell;
 
 
@@ -128,7 +128,7 @@ package body World is
 		for i in 1..(Size+2) loop put_buffer('='); end loop; put_buffer(LF);
 		for a in Area loop
 			if(Integer(a) mod Size = 0) then put_buffer('|'); end if;
-			put_buffer(if (get_cell(a) = Alive) then '@' else ' ');
+			put_buffer(if (get_cell(a) = Alive) then '+' else ' ');
 			if(Integer(a) mod Size = Size-1) then put_buffer('|'); put_buffer(LF); end if;
 		end loop;
 		for i in 1..(Size+2) loop put_buffer('='); end loop;
